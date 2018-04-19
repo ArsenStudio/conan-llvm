@@ -1,4 +1,3 @@
-
 variables:
     CONAN_USERNAME: "arsen-studio"
     CONAN_REFERENCE: "llvm/6.0.0"
@@ -9,6 +8,7 @@ variables:
     CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan "
     
     CONAN_BUILD_TYPES: "Release"
+    CONAN_ARCHS: "x86_64"
     
 .build-template: &build-template
     before_script:
