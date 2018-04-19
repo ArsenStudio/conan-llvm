@@ -27,8 +27,8 @@ class LlvmConan(ConanFile):
     branch = "release_60"
 
     def source(self):
-        self.run("git clone https://git.llvm.org/git/llvm {} --depth 1".format(self.branch))
-        self.run("cd llvm/tools && git clone https://git.llvm.org/git/clang {} --depth 1".format(self.branch))
+        self.run("git clone https://git.llvm.org/git/llvm -b {} --depth 1".format(self.branch))
+        self.run("cd llvm/tools && git clone https://git.llvm.org/git/clang -b {} --depth 1".format(self.branch))
 
 
     def build(self):
