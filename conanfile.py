@@ -22,7 +22,9 @@ class LlvmConan(ConanFile):
         'build_tools=True',
         'enable_pic=True',
         'enable_threads=True',
+        'gtest:shared=False'
     )
+    requires = "gtest/1.8.0@bincrafters/stable"
     generators = "cmake"
     branch = "release_60"
 

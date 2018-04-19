@@ -6,6 +6,7 @@ variables:
     CONAN_STABLE_BRANCH_PATTERN: "release/*"
     CONAN_UPLOAD: "https://api.bintray.com/conan/arsen-studio/arsen-deps"
     CONAN_UPLOAD_ONLY_WHEN_STABLE: "1"
+    CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan "
     
     CONAN_BUILD_TYPES: "Release"
     
