@@ -1,77 +1,166 @@
 variables:
-    CONAN_USERNAME: "arsen-studio"
-    CONAN_REFERENCE: "llvm/6.0.0"
-    CONAN_CHANNEL: "testing"
-    CONAN_STABLE_BRANCH_PATTERN: "release/*"
-    CONAN_UPLOAD: "https://api.bintray.com/conan/arsen-studio/arsen-deps"
-    CONAN_UPLOAD_ONLY_WHEN_STABLE: "1"
-    CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan "
-    
-    CONAN_BUILD_TYPES: "Release"
+  CONAN_USERNAME: "arsen-studio"
+  CONAN_STABLE_BRANCH_PATTERN: "stable/*"
+  CONAN_UPLOAD: "https://api.bintray.com/conan/arsen-studio/arsen-deps"
+  CONAN_UPLOAD_ONLY_RECIPE: "true"
+  CONAN_REFERENCE: "llvm/9.0.0"
+
+.build-template:
+  before_script:
+    - sudo pip install --upgrade conan_package_tools
+    - conan user
+  script:
+    - python build.py
+
+gcc-6:
+  image: conanio/gcc6
+  variables:
+    CONAN_GCC_VERSIONS: "6"
     CONAN_ARCHS: "x86_64"
-    
-.build-template: &build-template
-    before_script:
-        - sudo pip install --upgrade conan_package_tools
-        - conan user
-    script:
-        - python build.py
+  extends: .build-template
 
-# gcc-4.9:
-#     image: lasote/conangcc49
-#     variables:
-#         CONAN_GCC_VERSIONS: "4.9"
-#     <<: *build-template
-
-# gcc-5:
-#     image: lasote/conangcc5
-#     variables:
-#         CONAN_GCC_VERSIONS: "5"
-#     <<: *build-template
-
-# gcc-6:
-#     image: lasote/conangcc6
-#     variables:
-#         CONAN_GCC_VERSIONS: "6"
-#     <<: *build-template
+gcc-6-x86:
+  image: conanio/gcc6-x86
+  variables:
+    CONAN_GCC_VERSIONS: "6"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
 
 gcc-7:
-    image: lasote/conangcc7
-    variables:
-        CONAN_GCC_VERSIONS: "7"
-    <<: *build-template
+  image: conanio/gcc7
+  variables:
+    CONAN_GCC_VERSIONS: "7"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
 
-# clang-3.9:
-#     image: lasote/conanclang39
-#     variables:
-#         CONAN_CLANG_VERSIONS: "3.9"
-#     <<: *build-template
+gcc-7-x86:
+  image: conanio/gcc7-x86
+  variables:
+    CONAN_GCC_VERSIONS: "7"
+  extends: .build-template
 
-# clang-4.0:
-#     image: lasote/conanclang40
-#     variables:
-#         CONAN_CLANG_VERSIONS: "4.0"
-#     <<: *build-template
+gcc-8:
+  image: conanio/gcc8
+  variables:
+    CONAN_GCC_VERSIONS: "8"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
 
-# clang-5.0:
-#     image: lasote/conanclang50
-#     variables:
-#         CONAN_CLANG_VERSIONS: "5.0"
-#     <<: *build-template
+gcc-8-x86:
+  image: conanio/gcc8-x86
+  variables:
+    CONAN_GCC_VERSIONS: "8"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
 
-# clang-6.0:
-#     image: buildpack-deps:stretch
-#     variables:
-#         CONAN_CLANG_VERSIONS: "6.0"
-#         CONAN_DOCKER_USE_SUDO: "False"
-#     before_script:
-#         - curl -sL http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-#         - echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-6.0 main" > /etc/apt/sources.list.d/llvm.list
-#         - apt-get update -yqq
-#         - apt-get install clang-6.0 libc++-dev python-dev python-pip git cmake libxaw7 libxaw7-dev -yqq
-#         - ln -s /usr/bin/clang-6.0 /usr/bin/clang
-#         - ln -s /usr/bin/clang++-6.0 /usr/bin/clang++
-#         - pip install conan conan_package_tools
-#     script:
-#         - python build.py
+gcc-9:
+  image: conanio/gcc9
+  variables:
+    CONAN_GCC_VERSIONS: "9"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
 
+gcc-9-x86:
+  image: conanio/gcc9-x86
+  variables:
+    CONAN_GCC_VERSIONS: "9"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-4.0:
+  image: conanio/clang40
+  variables:
+    CONAN_CLANG_VERSIONS: "4.0"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-4.0-x86:
+  image: conanio/clang40-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "4.0"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-5.0:
+  image: conanio/clang50
+  variables:
+    CONAN_CLANG_VERSIONS: "5.0"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-5.0-x86:
+  image: conanio/clang50-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "5.0"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-6.0:
+  image: conanio/clang60
+  variables:
+    CONAN_CLANG_VERSIONS: "6.0"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-6.0-x86:
+  image: conanio/clang60-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "6.0"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-7.0:
+  image: conanio/clang70
+  variables:
+    CONAN_CLANG_VERSIONS: "7.0"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-7.0-x86:
+  image: conanio/clang70-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "7.0"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-7.1:
+  image: conanio/clang71
+  variables:
+    CONAN_CLANG_VERSIONS: "7.1"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-7.1-x86:
+  image: conanio/clang71-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "7.1"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-8:
+  image: conanio/clang8
+  variables:
+    CONAN_CLANG_VERSIONS: "8"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-8-x86:
+  image: conanio/clang8-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "8"
+    CONAN_ARCHS: "x86"
+  extends: .build-template
+
+clang-9:
+  image: conanio/clang9
+  variables:
+    CONAN_CLANG_VERSIONS: "9"
+    CONAN_ARCHS: "x86_64"
+  extends: .build-template
+
+clang-9-x86:
+  image: conanio/clang9-x86
+  variables:
+    CONAN_CLANG_VERSIONS: "9"
+    CONAN_ARCHS: "x86"
+  extends: .build-template

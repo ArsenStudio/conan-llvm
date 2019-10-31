@@ -1,13 +1,18 @@
-from conans import ConanFile, CMake, tools
-
+from conans import ConanFile, CMake, tools, errors
+import os
 
 class LlvmConan(ConanFile):
     name = "llvm"
-    version = "6.0.0"
-    license = "<Put the package license here>"
-    url = "https://gitlab.com/HeiGameStudio/ArsenEngine/dependencies/conan-llvm"
     description = "The LLVM Project is a collection of modular and reusable compiler and toolchain technologies"
-    license = "University of Illinois/NCSA Open Source License"
+    topics = ("conan", "llvm", "clang")
+    url = "https://gitlab.com/ArsenStudio/tools/conan/conan-llvm"
+    homepage = "https://llvm.org/"
+    license = "NCSA"
+
+    exports_sources = ["CMakeLists.txt"]
+    generators = "cmake"
+    short_paths = True
+
     settings = "os", "compiler", "build_type", "arch"
     options = {
         'shared': [True, False],
@@ -17,25 +22,32 @@ class LlvmConan(ConanFile):
         'enable_threads': [True, False]
     }
     default_options = (
-        'shared=True', 
+        'shared=True',
         'enable_rtti=True',
         'build_tools=True',
         'enable_pic=True',
         'enable_threads=True',
-        'gtest:shared=False'
+        # 'gtest:shared=False'
     )
-    requires = "gtest/1.8.0@bincrafters/stable"
-    generators = "cmake"
-    branch = "release_60"
+    # requires = "gtest/1.8.0@bincrafters/stable"
+
+    _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
 
     def source(self):
-        self.run("git clone https://git.llvm.org/git/llvm -b {} --depth 1".format(self.branch))
-        self.run("cd llvm/tools && git clone https://git.llvm.org/git/clang -b {} --depth 1".format(self.branch))
+        if self.version not in self.conan_data["sources"]:
+            self.output.error("The version " +self.version + " is not supported.")
+            exit(1)
 
+        tools.get(**self.conan_data["sources"][self.version]["llvm"])
+        os.rename("llvm-" + self.version + ".src", self._source_subfolder)
 
-    def build(self):
+        tools.get(**self.conan_data["sources"][self.version]["clang"], destination=os.path.join(self._source_subfolder, "tools"))
+        os.rename(os.path.join(self._source_subfolder, "tools", "cfe-" + self.version + ".src"), os.path.join(self._source_subfolder, "tools/clang"))
+
+    def _configure_cmake(self):
         cmake = CMake(self)
-        cmake.configure(build_folder="build", source_folder="llvm", defs={
+        cmake.configure(build_folder=self._build_subfolder, defs={
             'LIBCXX_INCLUDE_TESTS': False,
             'LIBCXX_INCLUDE_DOCS': False,
 
@@ -50,29 +62,21 @@ class LlvmConan(ConanFile):
             'LLVM_ENABLE_THREADS': self.options.enable_threads,
             'LLVM_BUILD_TESTS': False,
 
-            # Clang 
+            # Clang
             'CLANG_INCLUDE_DOCS': False,
             'CLANG_INCLUDE_TESTS': False,
-
-            'CMAKE_INSTALL_PREFIX': 'install',
-            'BUILD_SHARED_LIBS': self.options.shared
         })
+        return cmake
+
+    def build(self):
+        cmake = self._configure_cmake()
         cmake.build()
-        cmake.install()
 
     def package(self):
-        self.copy(pattern="*.h", dst="include", src="install/include", keep_path=True)
-        self.copy(pattern="*.lib", dst="lib", src="install/lib", keep_path=True)
-        self.copy(pattern="*.dll", dst="bin", src="install/bin", keep_path=True)
-        self.copy(pattern="*.a", dst="lib", src="install/lib", keep_path=True)
-        self.copy(pattern="*.dylib", dst="lib", src="install/lib", keep_path=True)
-        self.copy(pattern="*.so", dst="lib", src="install/lib", keep_path=True)
-        self.copy(pattern="*.cmake", dst="lib", src="install/lib", keep_path=True)
-
-
-        self.copy(pattern="*", dst="share", src="install/share", keep_path=True)
-        self.copy(pattern="*", dst="libexec", src="install/libexec", keep_path=True)
+        self.copy(pattern="LICENSE", dst="licenses", src=self._source_subfolder)
+        cmake = self._configure_cmake()
+        cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["libclang"]
+        self.cpp_info.libs = tools.collect_libs(self)
 
