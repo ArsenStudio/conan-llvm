@@ -177,21 +177,25 @@ jobs:
         CONAN_ARCHS: "x86_64"
         CONAN_CURRENT_PAGE: 1
         CONAN_TOTAL_PAGES: 2
+        CONAN_DOCKER_IMAGE: conanio/clang7
       Clang 7 x86_64 2:
         CONAN_CLANG_VERSIONS: 7.0
         CONAN_ARCHS: "x86_64"
         CONAN_CURRENT_PAGE: 2
         CONAN_TOTAL_PAGES: 2
+        CONAN_DOCKER_IMAGE: conanio/clang7
       Clang 7 x86 1:
         CONAN_CLANG_VERSIONS: 7.0
         CONAN_ARCHS: "x86"
         CONAN_CURRENT_PAGE: 1
         CONAN_TOTAL_PAGES: 2
+        CONAN_DOCKER_IMAGE: conanio/clang7
       Clang 7 x86 2:
         CONAN_CLANG_VERSIONS: 7.0
         CONAN_ARCHS: "x86"
         CONAN_CURRENT_PAGE: 2
         CONAN_TOTAL_PAGES: 2
+        CONAN_DOCKER_IMAGE: conanio/clang7
 
       Clang 8 x86_64 1:
         CONAN_CLANG_VERSIONS: 8
@@ -243,11 +247,11 @@ jobs:
   - task: UsePythonVersion@0
     inputs:
       versionSpec: "3.7"
-  # - task: UseXcodeVersion@0
-  #   inputs:
-  #     versionSpec: "$(xcodeVersion)"
+  - task: UseXcodeVersion@0
+    inputs:
+      versionSpec: "$(xcodeVersion)"
   - script: |
-      /bin/bash -c "sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer"
+      # /bin/bash -c "sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer"
       pip install --upgrade pip
       chmod +x .ci/install.sh
       ./.ci/install.sh
@@ -257,13 +261,13 @@ jobs:
   strategy:
     matrix:
       Clang 9.1:
-        xcodeVersion: '9.4.1'
+        xcodeVersion: '9'
         CONAN_APPLE_CLANG_VERSIONS: 9.1
       Clang 10.0:
         xcodeVersion: '10'
         CONAN_APPLE_CLANG_VERSIONS: 10.0
       Clang 11.0:
-        xcodeVersion: '11'
+        xcodeVersion: '11.1'
         CONAN_APPLE_CLANG_VERSIONS: 11.0
 
 - job: Windows
@@ -288,46 +292,97 @@ jobs:
         CONAN_VISUAL_VERSIONS: 15
         CONAN_ARCHS: "x86_64"
         CONAN_CURRENT_PAGE: 1
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
       Visual 2017 x86_64 2:
         imageName: 'vs2017-win2016'
         CONAN_VISUAL_VERSIONS: 15
         CONAN_ARCHS: "x86_64"
         CONAN_CURRENT_PAGE: 2
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
+      Visual 2017 x86_64 3:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 3
+        CONAN_TOTAL_PAGES: 4
+      Visual 2017 x86_64 4:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 4
+        CONAN_TOTAL_PAGES: 4
+
       Visual 2017 x86 1:
         imageName: 'vs2017-win2016'
         CONAN_VISUAL_VERSIONS: 15
         CONAN_ARCHS: "x86"
         CONAN_CURRENT_PAGE: 1
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
       Visual 2017 x86 2:
         imageName: 'vs2017-win2016'
         CONAN_VISUAL_VERSIONS: 15
         CONAN_ARCHS: "x86"
         CONAN_CURRENT_PAGE: 2
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
+      Visual 2017 x86 3:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 3
+        CONAN_TOTAL_PAGES: 4
+      Visual 2017 x86 4:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 4
+        CONAN_TOTAL_PAGES: 4
+
       Visual 2019 x86_64 1:
         imageName: 'windows-2019'
         CONAN_VISUAL_VERSIONS: 16
         CONAN_ARCHS: "x86_64"
         CONAN_CURRENT_PAGE: 1
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
       Visual 2019 x86_64 2:
         imageName: 'windows-2019'
         CONAN_VISUAL_VERSIONS: 16
         CONAN_ARCHS: "x86_64"
         CONAN_CURRENT_PAGE: 2
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
+      Visual 2019 x86_64 3:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 3
+        CONAN_TOTAL_PAGES: 4
+      Visual 2019 x86_64 4:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 4
+        CONAN_TOTAL_PAGES: 4
+
       Visual 2019 x86 1:
         imageName: 'windows-2019'
         CONAN_VISUAL_VERSIONS: 16
         CONAN_ARCHS: "x86"
         CONAN_CURRENT_PAGE: 1
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
       Visual 2019 x86 2:
         imageName: 'windows-2019'
         CONAN_VISUAL_VERSIONS: 16
         CONAN_ARCHS: "x86"
         CONAN_CURRENT_PAGE: 2
-        CONAN_TOTAL_PAGES: 2
+        CONAN_TOTAL_PAGES: 4
+      Visual 2019 x86 3:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 3
+        CONAN_TOTAL_PAGES: 4
+      Visual 2019 x86 4:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 3
+        CONAN_TOTAL_PAGES: 4

@@ -98,10 +98,20 @@ conan_basic_setup()''')
         cmake = self._configure_cmake()
         cmake.build(target="clang")
 
+    def removeSymlinks(self, path):
+        for r, _, files in os.walk(path):
+            for file in files:
+                f = os.path.join(r, file)
+                if os.path.islink(f):
+                    os.unlink(f)
+
     def package(self):
         self.copy(pattern="LICENSE", dst="licenses", src=self._source_subfolder)
         cmake = self._configure_cmake()
         cmake.install()
+
+        if self.settings.os == "Linux":
+            self.removeSymlinks(os.path.join(self.package_folder, 'bin'))
 
     def isPlugin(self, libname):
         return libname.endswith("Plugin")
