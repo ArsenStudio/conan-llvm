@@ -1,0 +1,333 @@
+variables:
+  CONAN_USERNAME: "arsen-studio"
+  CONAN_STABLE_BRANCH_PATTERN: "stable/*"
+  CONAN_UPLOAD: "https://api.bintray.com/conan/arsen-studio/arsen-deps"
+  CONAN_UPLOAD_ONLY_RECIPE: "true"
+  CONAN_REFERENCE: "llvm/9.0.0"
+
+jobs:
+- job: Linux
+  pool:
+    vmImage: "ubuntu-18.04"
+  timeoutInMinutes: 0
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.7"
+  - script: |
+      pip install --upgrade pip
+      chmod +x .ci/install.sh
+      ./.ci/install.sh
+      chmod +x .ci/run.sh
+      ./.ci/run.sh
+    env:
+      CONAN_USE_DOCKER: 1
+
+  strategy:
+    matrix:
+      Gcc 6 x86_64 1:
+        CONAN_GCC_VERSIONS: 6
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 6 x86_64 2:
+        CONAN_GCC_VERSIONS: 6
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Gcc 6 x86 1:
+        CONAN_GCC_VERSIONS: 6
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 6 x86 2:
+        CONAN_GCC_VERSIONS: 6
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Gcc 7 x86_64 1:
+        CONAN_GCC_VERSIONS: 7
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 7 x86_64 2:
+        CONAN_GCC_VERSIONS: 7
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Gcc 7 x86 1:
+        CONAN_GCC_VERSIONS: 7
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 7 x86 2:
+        CONAN_GCC_VERSIONS: 7
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Gcc 8 x86_64 1:
+        CONAN_GCC_VERSIONS: 8
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 8 x86_64 2:
+        CONAN_GCC_VERSIONS: 8
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Gcc 8 x86 1:
+        CONAN_GCC_VERSIONS: 8
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 8 x86 2:
+        CONAN_GCC_VERSIONS: 8
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Gcc 9 x86_64 1:
+        CONAN_GCC_VERSIONS: 9
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 9 x86_64 2:
+        CONAN_GCC_VERSIONS: 9
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Gcc 9 x86 1:
+        CONAN_GCC_VERSIONS: 9
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Gcc 9 x86 2:
+        CONAN_GCC_VERSIONS: 9
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Clang 4.0 x86_64 1:
+        CONAN_CLANG_VERSIONS: 4.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 4.0 x86_64 2:
+        CONAN_CLANG_VERSIONS: 4.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Clang 4.0 x86 1:
+        CONAN_CLANG_VERSIONS: 4.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 4.0 x86 2:
+        CONAN_CLANG_VERSIONS: 4.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Clang 5.0 x86_64 1:
+        CONAN_CLANG_VERSIONS: 5.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 5.0 x86_64 2:
+        CONAN_CLANG_VERSIONS: 5.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Clang 5.0 x86 1:
+        CONAN_CLANG_VERSIONS: 5.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 5.0 x86 2:
+        CONAN_CLANG_VERSIONS: 5.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Clang 6.0 x86_64 1:
+        CONAN_CLANG_VERSIONS: 6.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 6.0 x86_64 2:
+        CONAN_CLANG_VERSIONS: 6.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Clang 6.0 x86 1:
+        CONAN_CLANG_VERSIONS: 6.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 6.0 x86 2:
+        CONAN_CLANG_VERSIONS: 6.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Clang 7 x86_64 1:
+        CONAN_CLANG_VERSIONS: 7.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 7 x86_64 2:
+        CONAN_CLANG_VERSIONS: 7.0
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Clang 7 x86 1:
+        CONAN_CLANG_VERSIONS: 7.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 7 x86 2:
+        CONAN_CLANG_VERSIONS: 7.0
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Clang 8 x86_64 1:
+        CONAN_CLANG_VERSIONS: 8
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 8 x86_64 2:
+        CONAN_CLANG_VERSIONS: 8
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Clang 8 x86 1:
+        CONAN_CLANG_VERSIONS: 8
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 8 x86 2:
+        CONAN_CLANG_VERSIONS: 8
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+      Clang 9 x86_64 1:
+        CONAN_CLANG_VERSIONS: 9
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 9 x86_64 2:
+        CONAN_CLANG_VERSIONS: 9
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Clang 9 x86 1:
+        CONAN_CLANG_VERSIONS: 9
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Clang 9 x86 2:
+        CONAN_CLANG_VERSIONS: 9
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+
+- job: macOS
+  pool:
+    vmImage: "macOS-latest"
+  timeoutInMinutes: 0
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.7"
+  # - task: UseXcodeVersion@0
+  #   inputs:
+  #     versionSpec: "$(xcodeVersion)"
+  - script: |
+      /bin/bash -c "sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer"
+      pip install --upgrade pip
+      chmod +x .ci/install.sh
+      ./.ci/install.sh
+      chmod +x .ci/run.sh
+      ./.ci/run.sh
+
+  strategy:
+    matrix:
+      Clang 9.1:
+        xcodeVersion: '9.4.1'
+        CONAN_APPLE_CLANG_VERSIONS: 9.1
+      Clang 10.0:
+        xcodeVersion: '10'
+        CONAN_APPLE_CLANG_VERSIONS: 10.0
+      Clang 11.0:
+        xcodeVersion: '11'
+        CONAN_APPLE_CLANG_VERSIONS: 11.0
+
+- job: Windows
+  pool:
+    vmImage: "$(imageName)"
+  timeoutInMinutes: 0
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.7"
+  - script: |
+      set PATH=%PATH%;%PYTHON%/Scripts/
+      pip.exe install conan --upgrade
+      pip.exe install conan_package_tools
+      conan user
+      python build.py
+
+  strategy:
+    matrix:
+      Visual 2017 x86_64 1:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Visual 2017 x86_64 2:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Visual 2017 x86 1:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Visual 2017 x86 2:
+        imageName: 'vs2017-win2016'
+        CONAN_VISUAL_VERSIONS: 15
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Visual 2019 x86_64 1:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Visual 2019 x86_64 2:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86_64"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
+      Visual 2019 x86 1:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 1
+        CONAN_TOTAL_PAGES: 2
+      Visual 2019 x86 2:
+        imageName: 'windows-2019'
+        CONAN_VISUAL_VERSIONS: 16
+        CONAN_ARCHS: "x86"
+        CONAN_CURRENT_PAGE: 2
+        CONAN_TOTAL_PAGES: 2
