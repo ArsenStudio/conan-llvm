@@ -110,7 +110,7 @@ conan_basic_setup(KEEP_RPATHS)''')
         cmake = self._configure_cmake()
         cmake.install()
 
-        if self.settings.os == "Linux":
+        if self.settings.os != "Windows":
             self.removeSymlinks(os.path.join(self.package_folder, 'bin'))
 
     def isPlugin(self, libname):
