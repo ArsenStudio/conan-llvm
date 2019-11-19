@@ -261,7 +261,7 @@ jobs:
   strategy:
     matrix:
       Clang 9.1:
-        xcodeVersion: '9'
+        xcodeVersion: '^9'
         CONAN_APPLE_CLANG_VERSIONS: 9.1
       Clang 10.0:
         xcodeVersion: '10'

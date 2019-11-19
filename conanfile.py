@@ -50,7 +50,7 @@ class LlvmConan(ConanFile):
   LANGUAGES C CXX ASM)
 
 include(../../conanbuildinfo.cmake)
-conan_basic_setup()''')
+conan_basic_setup(KEEP_RPATHS)''')
 
     def config_options(self):
         if self.settings.os == "Windows":
