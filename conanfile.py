@@ -119,7 +119,7 @@ conan_basic_setup(KEEP_RPATHS)''')
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
 
-        if self.settings.os == "Linux":
+        if self.settings.os != "Windows":
             self.cpp_info.libs = [libname for libname in self.cpp_info.libs if not self.isPlugin(libname)]
 
         if self.settings.os == "Windows":
