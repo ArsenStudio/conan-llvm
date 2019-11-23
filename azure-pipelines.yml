@@ -22,6 +22,7 @@ jobs:
       ./.ci/run.sh
     env:
       CONAN_USE_DOCKER: 1
+      CONAN_DOCKER_32_IMAGES: 1
 
   strategy:
     matrix:
